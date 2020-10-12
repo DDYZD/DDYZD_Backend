@@ -8,12 +8,17 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const indexRouter = require('./routes/index');
+const { sequelize } = require("./models");
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+
+sequelize.sync({ force: false })
+  .then(() => console.log("데이버 베이스 연결 성공"))
+  .catch(console.error);
 
 app.use(logger("dev"));
 app.use(express.json());

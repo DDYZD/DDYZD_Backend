@@ -5,9 +5,9 @@ const bcrypt = require("bcrypt");
 
 const { User } = require("../models");
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('index', { title: 'Express' });
-});
+}); 
 
 router.post("/signup", async (req, res) => {
   const { code, id, password, phoneNumber } = req.body;
@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
     const user = await User.findOne({ where: { code } });
     if(!user) {
       return res.status(400).json({
-        message: "코드가 일치하지 않습니다.",
+        message: "코드가 일치하지 않습니다.", 
       });
     } 
     const hash = await bcrypt.hash(password, 12);
