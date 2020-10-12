@@ -1,22 +1,20 @@
-const { INTEGER, DATE, Sequelize } = require("sequelize")
+const Sequelize = require("sequelize");
 
 module.exports = class User extends Sequelize.Model{
     static init(sequelize){
         return super.init(
             {
-                time: {
-                    type: DATE
-                },
-                place: {
-                    type: Sequelize.STRING(20)
+                title: {
+                    type: Sequelize.STRING(15),
+                    allowNull: false
                 },
             },
             {
-                sequelize,
+            sequelize,
             timestamps: false,
             underscored: false,
-            tableName: "recruitments",
-            modelName: "Recruitment",
+            tableName: "tags",
+            modelName: "Tag",
             paranoid: false,
             charset: "utf8",
             collate: "utf8_general_ci",
