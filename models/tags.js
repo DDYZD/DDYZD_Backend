@@ -21,5 +21,11 @@ module.exports = class Tag extends Sequelize.Model{
             }
         );
     }
-    static associate(db){}
+    
+    static associate(db){
+        db.Tag.belongsToMany(db.Circle, {
+            foreignKey: "TagId",
+            through: "Circletag",
+        });
+    }
 }

@@ -1,28 +1,33 @@
-const { INTEGER, DATE, Sequelize } = require("sequelize")
+const Sequelize = require("sequelize")
 
 module.exports = class Circle extends Sequelize.Model{
     static init(sequelize){
         return super.init(
             {
                 recruitment: {
-                    type: Boolean,
-                    allowNull: false
+                    type: Sequelize.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false,
                 },
                 name: {
                     type: Sequelize.STRING(30),
-                    allowNull: false
+                    allowNull: false,
                 },
                 background: {
-                    type: Sequelize.STRING(200)
+                    type: Sequelize.STRING(200),
+                    allowNull: true,
                 },
                 logo: {
-                    type: Sequelize.STRING(200)
+                    type: Sequelize.STRING(200),
+                    allowNull: true,
                 },
                 startday: {
-                    type: DATE
+                    type: Sequelize.DATE,
+                    allowNull: true,
                 },
                 endday: {
-                    type: DATE
+                    type: Sequelize.DATE,
+                    allowNull: true,
                 },
             },
             {
@@ -37,5 +42,14 @@ module.exports = class Circle extends Sequelize.Model{
             }
         );
     }
-    static associate(db){}
+    static associate(db){
+        db.Circle.belongsToMany(db.User, {
+            foreignKey: "CircleId",
+            through: "Recruitment",
+        });
+        db.Circle.belongsToMany(db.Tag, {
+            foreignKey: "CircleId",
+            through: "Circletag",
+        });
+    }
 }

@@ -6,7 +6,7 @@ const db = {};
 const User = require("./users");
 const Tag = require("./tags");
 const Circle = require("./circles");
-const Recruitment = require("./recruitments");
+const Recruitment = require("./recruitments");  
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 

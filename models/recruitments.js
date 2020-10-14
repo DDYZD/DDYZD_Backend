@@ -1,14 +1,16 @@
-const { DATE, Sequelize } = require("sequelize")
+const Sequelize = require("sequelize")
 
-module.exports = class Recruitment extends Sequelize.Model{
+module.exports = class User extends Sequelize.Model{
     static init(sequelize){
         return super.init(
             {
                 time: {
-                    type: DATE
+                    type: Sequelize.DATE,
+                    allowNull: true,
                 },
                 place: {
-                    type: Sequelize.STRING(20)
+                    type: Sequelize.STRING(20),
+                    allowNull: true,
                 },
             },
             {

@@ -1,6 +1,6 @@
 const User = require("../models/index").User;
-const isEmpty = () => {
-    const users = User.findAll();
+const isEmpty = async () => {
+    const users = await User.findAll();
     if(!users)
     {
            

@@ -86,11 +86,11 @@ router.get("/circles", async (req, res) => {
         attributes: ["title"],
       },
     });
-    circles.Tags.map(t => t.title);
+    console.log(circles);
     res.status(200).json(circles);
   } catch(err) {
     console.error(err);
-    res.staus(500).json({
+    res.status(500).json({
       messge: "서버 에러",
     });
   }
