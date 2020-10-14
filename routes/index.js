@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
   res.send("index page");
 }); 
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   const { code, id, password, phoneNumber } = req.body;
   try {
     const user = await User.findOne({ where: { code } });

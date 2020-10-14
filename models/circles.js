@@ -27,13 +27,13 @@ module.exports = class Circle extends Sequelize.Model{
             },
             {
                 sequelize,
-            timestamps: false,
-            underscored: false,
-            tableName: "circles",
-            modelName: "Circle",
-            paranoid: false,
-            charset: "utf8",
-            collate: "utf8_general_ci",
+                timestamps: false,
+                underscored: false,
+                tableName: "circles",
+                modelName: "Circle",
+                paranoid: false,
+                charset: "utf8",
+                collate: "utf8_general_ci",
             }
         );
     }
