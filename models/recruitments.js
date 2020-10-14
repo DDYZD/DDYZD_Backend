@@ -1,4 +1,4 @@
-const { INTEGER, DATE, Sequelize } = require("sequelize")
+const { DATE, Sequelize } = require("sequelize")
 
 module.exports = class User extends Sequelize.Model{
     static init(sequelize){
@@ -13,13 +13,13 @@ module.exports = class User extends Sequelize.Model{
             },
             {
                 sequelize,
-            timestamps: false,
-            underscored: false,
-            tableName: "recruitments",
-            modelName: "Recruitment",
-            paranoid: false,
-            charset: "utf8",
-            collate: "utf8_general_ci",
+                timestamps: false,
+                underscored: false,
+                tableName: "recruitments",
+                modelName: "Recruitment",
+                paranoid: false,
+                charset: "utf8",
+                collate: "utf8_general_ci",
             }
         );
     }
