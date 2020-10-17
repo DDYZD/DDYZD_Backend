@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const { signRouter, loginRouter } = require("../controller/auth");
-const { circlesAll, circlesWeb, circlesApp, circlesEmbedded, circlesEtc } = require("../controller/circles");
+const { errorHandler } = require("./middleware");
+
+const authController = require("../controller/auth");
+
+const signupRouter = errorHandler(authController.sign);
+const loginRouter = errorHandler(authController.login);
 
 router.get('/', (req, res, next) => {
-  res.send("index page");
+  res.send("ddyzd api server");
 }); 
 
-router.post("/signup", signRouter);
+router.post("/signup", signupRouter);
 router.post("/login", loginRouter);
-
-router.get("/circles", circlesAll);
-router.get("/circles/web", circlesWeb);
-router.get("/circles/app", circlesApp);
-router.get("/circles/embedded", circlesEmbedded);
-router.get("/circles/etc", circlesEtc);
 
 module.exports = router;

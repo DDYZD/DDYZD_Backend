@@ -9,6 +9,8 @@ const isEmpty = require("./students/index").isEmpty;
 dotenv.config();
 
 const indexRouter = require('./routes/index');
+const circlesRouter = require("./routes/circles");
+
 const { sequelize } = require("./models");
 
 const app = express();
@@ -30,6 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 isEmpty();
 
 app.use('/', indexRouter);
+app.use("/circles", circlesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
