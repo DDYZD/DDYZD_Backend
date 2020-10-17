@@ -24,6 +24,5 @@ Recruitment.init(sequelize);
 User.associate(db);
 Tag.associate(db);
 Circle.associate(db);
-Recruitment.associate(db);
 
 module.exports = db;
