@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const { User } = require("../models");
 
-exports.signRouter = async (req, res) => {
+const signRouter = async (req, res) => {
   const { code, id, password, phoneNumber } = req.body;
   try {
     const user = await User.findOne({ where: { code } });
@@ -36,7 +36,7 @@ exports.signRouter = async (req, res) => {
   }
 };
 
-exports.loginRouter = async (req, res) => {
+const loginRouter = async (req, res) => {
   try {
     const { id, password } = req.body;
     const exUser = await User.findOne({ where: { nick: id }});
@@ -69,4 +69,9 @@ exports.loginRouter = async (req, res) => {
       message: "서버 에러",
     });
   }
+};
+
+module.exports = {
+  signRouter,
+  loginRouter,
 };
