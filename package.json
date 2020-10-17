@@ -4,7 +4,7 @@
   "private": true,
   "repository": "https://github.com/DDYZD/DDYZD_Backend",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./app"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
