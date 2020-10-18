@@ -5,7 +5,9 @@ const { User } = require("../models");
 
 const sign = async (req, res) => {
   const { code, id, password, phoneNumber } = req.body;
-  const user = await User.findOne({ where: { code } });
+  const findByCodePromise = User.findOne({ where: { code } });
+  const findByIdPromise = User.findOne({ where: { nick: id }});
+  const user = await findByCodePromise;
   if(!user) {
     return res.status(400).json({
       message: "코드가 일치하지 않습니다.", 
@@ -14,6 +16,12 @@ const sign = async (req, res) => {
   if(user.nick !== null) {
     return res.status(403).json({
       message: "이미 가입된 회원입니다.",
+    });
+  }
+  const exUser = await findByIdPromise;
+  if(exUser) {
+    return res.status(403).json({
+      message: "이미 존재하는 id입니다.",
     });
   }
   const hash = await bcrypt.hash(password, 12);
