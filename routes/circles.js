@@ -2,13 +2,6 @@ const express = require("express");
 const fs = require("fs");
 const router = express.Router();
 
-try {
-  fs.readdirSync("uploads");
-} catch(err) {
-  console.error("uploads 폴더 생성");
-  fs.mkdir("uploads")
-}
-
 const { errorHandler } = require("./middleware");
 
 const findCirclesController = require("../controller/circles");
