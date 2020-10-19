@@ -2,7 +2,13 @@ const jwt = require("jsonwebtoken");
 
 exports.verifyToken = (req, res, next) => {
   try {
-      req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+      req.decoded = jwt.verify(req.headers.authorization.slice(7), process.env.JWT_SECRET);
+      if(!req.decoded.adminCircle) {
+          return res.status(400).json({
+            code: 400,
+            message: "권한이 없습니다.",
+          });
+      }
       return next();
   } catch(err) {
       console.error(err);
