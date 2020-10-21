@@ -2,10 +2,12 @@ const jwt = require("jsonwebtoken");
 
 exports.verifyToken = (req, res, next) => {
   try {
-      req.decoded = jwt.verify(req.headers.authorization.slice(7), process.env.JWT_SECRET);
+      console.log(req.headers);
+      console.log(req.headers.authentication.slice(7));  
+      req.decoded = jwt.verify(req.headers.authentication.slice(7), process.env.JWT_SECRET);
       if(!req.decoded.adminCircle) {
-          return res.status(400).json({
-            code: 400,
+          return res.status(401).json({
+            code: 401,
             message: "권한이 없습니다.",
           });
       }
@@ -13,8 +15,8 @@ exports.verifyToken = (req, res, next) => {
   } catch(err) {
       console.error(err);
       if(err.name === "TokenExpiredError") {
-          return res.status(419).json({
-              code: 419,
+          return res.status(401).json({
+              code: 401,
               message: "토큰이 만료되었습니다",
           });
       }

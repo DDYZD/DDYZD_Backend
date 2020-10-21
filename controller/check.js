@@ -14,7 +14,7 @@ const checkCode = async (req, res) => {
 };
 
 const checkId = async (req, res) => {
-  const { code: nick } = req.body;
+  const { id: nick } = req.body;
   const exCode = await User.findOne({ 
     where: { nick },
     attributes: ["nick"],

@@ -1,5 +1,7 @@
 const express = require("express");
 const multer = require("multer");
+const path = require("path");
+const { nextTick } = require("process");
 
 const router = express.Router();
 
@@ -20,8 +22,12 @@ const upload = multer({
 
 router.get("/", verifyToken, (req, res) => {
   res.json({
-    message: "success",
+    message: "success", 
   });
+});
+
+router.post("/set/logo", verifyToken, upload.single("img"), (req, res, next) => {
+  res.json({ url: `img/${req.file.filename}`});
 });
 
 module.exports = router;
