@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 exports.verifyToken = (req, res, next) => {
-  try {
-      console.log(req.headers);
-      console.log(req.headers.authentication.slice(7));  
+  try {  
       req.decoded = jwt.verify(req.headers.authentication.slice(7), process.env.JWT_SECRET);
       if(!req.decoded.adminCircle) {
           return res.status(401).json({

@@ -6,16 +6,21 @@ const { errorHandler } = require("./middleware");
 const authController = require("../controller/auth");
 const checkController = require("../controller/check");
 
+const adminUserController = require("../controller/admin");
+
 const signupRouter = errorHandler(authController.sign);
 const loginRouter = errorHandler(authController.login);
 
 const checkCodeRouter = errorHandler(checkController.checkCode);
 const checkIdRouter = errorHandler(checkController.checkId);
 
+const setDataRouter = errorHandler(adminUserController.setData);
+
 router.get('/', (req, res, next) => {
   res.send(`ddyzd api server
   <form action="/" method="post" enctype="multipart/form-data">
     <input id="img" name="img" type="file">
+    <input id="url" name="url" type="hidden">
     <input type="submit">
     <image id="img-preview"><image>
   </form>
@@ -39,11 +44,7 @@ router.get('/', (req, res, next) => {
   );
 }); 
 
-router.post("/", (req, res) => {
-  res.status(301);
-  res.setHeader("Location", "/");
-  res.end();
-});
+router.post("/", setDataRouter);
 
 router.post("/signup", signupRouter);
 router.post("/login", loginRouter);

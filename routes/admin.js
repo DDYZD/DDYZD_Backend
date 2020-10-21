@@ -1,11 +1,14 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const { nextTick } = require("process");
 
 const router = express.Router();
 
 const { verifyToken } = require("./middleware");
+const { errorHandler } = require("../routes/middleware");
+const adminUserController = require("../controller/admin");
+
+const setLogoRouter = errorHandler(adminUserController.setLogo);
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -26,8 +29,6 @@ router.get("/", verifyToken, (req, res) => {
   });
 });
 
-router.post("/set/logo", verifyToken, upload.single("img"), (req, res, next) => {
-  res.json({ url: `img/${req.file.filename}`});
-});
+router.post("/set/logo", verifyToken, upload.single("img"), setLogoRouter);
 
 module.exports = router;

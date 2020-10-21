@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
+const session = require("express-session");
 const isEmpty = require("./students/index").isEmpty;
 
 dotenv.config();
@@ -26,6 +27,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+}));
 app.use("/img", express.static(path.join(__dirname, "uploads")));
 
 isEmpty();  
