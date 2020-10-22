@@ -58,7 +58,7 @@ const login = async (req, res) => {
       nick: exUser.nick,
       adminCircle: exUser.adminCircle,
     }, process.env.JWT_SECRET, {
-      expiresIn: "8h", // 유효기간
+      expiresIn: "10h", // 유효기간
       issuer: "ddyzd", // 발급자
     });
     res.status(200).json({
@@ -68,7 +68,16 @@ const login = async (req, res) => {
   }
 };
 
+const offerInfo = async (req, res) => {
+  const user = await User.findOne({
+    where: { id: req.decoded.id },
+    attributes: ["name", "classNo"],
+  });
+  res.json(user);
+};
+
 module.exports = {
   sign,
   login,
+  offerInfo,
 };

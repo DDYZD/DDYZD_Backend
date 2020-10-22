@@ -9,45 +9,16 @@ const { User } = require('../models');
 
 const signupRouter = errorHandler(authController.sign);
 const loginRouter = errorHandler(authController.login);
+const offerInfoRouter = errorHandler(authController.offerInfo);
 
 const checkCodeRouter = errorHandler(checkController.checkCode);
 const checkIdRouter = errorHandler(checkController.checkId);
 
 router.get('/', (req, res, next) => {
-  res.send(`ddyzd api server
-  <form action="/admin/post/background" method="post" enctype="multipart/form-data">
-    <input id="img" name="img" type="file">
-    <input id="url" name="url" type="hidden">
-    <input type="submit">
-    <image id="img-preview"><image>
-  </form>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-  document.getElementById('img').addEventListener('change', function(e) {
-    const formData = new FormData();
-    formData.append('img', this.files[0]);
-    axios.post('/admin/set/background', formData, {
-      headers: { Authentication: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmljayI6ImFzZGYiLCJhZG1pbkNpcmNsZSI6IlBBTkciLCJpYXQiOjE2MDMzNTM5NjYsImV4cCI6MTYwMzM4Mjc2NiwiaXNzIjoiZGR5emQifQ.LtKMpnaRcZ1Pp4lsBcKVrkWe8XtfZuP76Xbvm0XwryI" },
-    })
-      .then((res) => {
-        document.getElementById('img-preview').src = res.data.url;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
-  </script>
-  `
-  );
+  res.send(`ddyzd api server`);
 }); 
 
-router.get("/myInfo", verifyToken, async (req, res) => {
-  const user = await User.findOne({
-    where: { id: req.decoded.id },
-    attributes: ["name", "classNo"],
-  });
-  res.json(user);
-});
+router.get("/myInfo", verifyToken, offerInfoRouter);
 
 router.post("/signup", signupRouter);
 router.post("/login", loginRouter);

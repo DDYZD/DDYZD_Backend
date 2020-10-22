@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
 const session = require("express-session");
+const cors = require("cors");
 const isEmpty = require("./students/index").isEmpty;
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
 }));
 app.use("/img", express.static(path.join(__dirname, "uploads")));
+app.use(cors());
 
 isEmpty();  
 
