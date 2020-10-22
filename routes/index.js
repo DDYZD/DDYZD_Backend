@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { errorHandler } = require("./middleware");
+const { errorHandler, verifyToken } = require("./middleware");
 
 const authController = require("../controller/auth");
 const checkController = require("../controller/check");
-
-const adminUserController = require("../controller/admin");
+const { User } = require('../models');
 
 const signupRouter = errorHandler(authController.sign);
 const loginRouter = errorHandler(authController.login);
@@ -14,11 +13,9 @@ const loginRouter = errorHandler(authController.login);
 const checkCodeRouter = errorHandler(checkController.checkCode);
 const checkIdRouter = errorHandler(checkController.checkId);
 
-const setDataRouter = errorHandler(adminUserController.setData);
-
 router.get('/', (req, res, next) => {
   res.send(`ddyzd api server
-  <form action="/" method="post" enctype="multipart/form-data">
+  <form action="/admin/post/background" method="post" enctype="multipart/form-data">
     <input id="img" name="img" type="file">
     <input id="url" name="url" type="hidden">
     <input type="submit">
@@ -29,8 +26,8 @@ router.get('/', (req, res, next) => {
   document.getElementById('img').addEventListener('change', function(e) {
     const formData = new FormData();
     formData.append('img', this.files[0]);
-    axios.post('/admin/set/logo', formData, {
-      headers: { Authentication: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmljayI6ImFzZGYiLCJhZG1pbkNpcmNsZSI6IlBBTkciLCJpYXQiOjE2MDMyODY0NTYsImV4cCI6MTYwMzMxNTI1NiwiaXNzIjoiZGR5emQifQ.OhNrRDrEycnAiECU2DoMNbFG0QijwdBHuD0DMUHjtgw" },
+    axios.post('/admin/set/background', formData, {
+      headers: { Authentication: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmljayI6ImFzZGYiLCJhZG1pbkNpcmNsZSI6IlBBTkciLCJpYXQiOjE2MDMzNTM5NjYsImV4cCI6MTYwMzM4Mjc2NiwiaXNzIjoiZGR5emQifQ.LtKMpnaRcZ1Pp4lsBcKVrkWe8XtfZuP76Xbvm0XwryI" },
     })
       .then((res) => {
         document.getElementById('img-preview').src = res.data.url;
@@ -44,7 +41,13 @@ router.get('/', (req, res, next) => {
   );
 }); 
 
-router.post("/", setDataRouter);
+router.get("/myInfo", verifyToken, async (req, res) => {
+  const user = await User.findOne({
+    where: { id: req.decoded.id },
+    attributes: ["name", "classNo"],
+  });
+  res.json(user);
+});
 
 router.post("/signup", signupRouter);
 router.post("/login", loginRouter);

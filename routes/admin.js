@@ -6,9 +6,13 @@ const router = express.Router();
 
 const { verifyToken } = require("./middleware");
 const { errorHandler } = require("../routes/middleware");
+
 const adminUserController = require("../controller/admin");
 
-const setLogoRouter = errorHandler(adminUserController.setLogo);
+const beforeUpdateSetLogoRouter = errorHandler(adminUserController.beforeUpdateSetLogo);
+const updateLogoRouter = errorHandler(adminUserController.updateLogo);
+const beforeUpdateSetBackgroundRouter = errorHandler(adminUserController.beforeUpdateSetBackground);
+const updateBackgroundRouter = errorHandler(adminUserController.updateBackground);
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -23,12 +27,9 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.get("/", verifyToken, (req, res) => {
-  res.json({
-    message: "success", 
-  });
-});
-
-router.post("/set/logo", verifyToken, upload.single("img"), setLogoRouter);
+router.post("/set/logo", verifyToken, upload.single("img"), beforeUpdateSetLogoRouter);
+router.post("/post/logo", updateLogoRouter);
+router.post("/set/background", verifyToken, upload.single("img"), beforeUpdateSetBackgroundRouter);
+router.post("/post/background", updateBackgroundRouter);
 
 module.exports = router;
