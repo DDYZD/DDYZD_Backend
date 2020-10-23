@@ -54,11 +54,10 @@ const login = async (req, res) => {
       });
     } 
     const token = jwt.sign({
-      id: exUser.id,
       nick: exUser.nick,
       adminCircle: exUser.adminCircle,
     }, process.env.JWT_SECRET, {
-      expiresIn: "10h", // 유효기간
+      expiresIn: "15h", // 유효기간
       issuer: "ddyzd", // 발급자
     });
     res.status(200).json({
@@ -68,9 +67,29 @@ const login = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { nowPassword, newPassword } = req.body;
+  const user = await User.findOne({ where: { nick: req.decoded.nick } });
+  const result = await bcrypt.compare(nowPassword, user.password);
+  if(!result) {
+    return res.status(400).json({
+      message: "기존 비밀번호가 옳지 않습니다.",
+    });
+  }
+  const hash = await bcrypt.hash(newPassword, 12);
+  await User.update({
+    password: hash,
+  }, {
+    where: { nick: req.decoded.nick },
+  });
+  res.status(200).json({
+    message: "비밀번호가 변경되었습니다.",
+  });
+};
+
 const offerInfo = async (req, res) => {
   const user = await User.findOne({
-    where: { id: req.decoded.id },
+    where: { nick: req.decoded.nick },
     attributes: ["name", "classNo"],
   });
   res.json(user);
@@ -80,4 +99,5 @@ module.exports = {
   sign,
   login,
   offerInfo,
+  changePassword,
 };

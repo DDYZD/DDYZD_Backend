@@ -4,8 +4,7 @@ const path = require("path");
 
 const router = express.Router();
 
-const { verifyToken } = require("./middleware");
-const { errorHandler } = require("../routes/middleware");
+const { verifyToken, errorHandler } = require("./middleware");
 
 const adminUserController = require("../controller/admin");
 
