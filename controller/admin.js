@@ -19,7 +19,6 @@ const beforeUpdateSetLogo = async (req, res) => {
 };
 
 const updateBackground = async (req, res) => {
-  console.log(req.session);
   await Circle.update({
     background: req.session.filename,
   }, {

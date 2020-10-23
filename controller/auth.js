@@ -7,7 +7,6 @@ const sign = async (req, res) => {
   const { code, id, password, phoneNumber } = req.body;
   const findByCodePromise = User.findOne({ where: { code } });
   const findByIdPromise = User.findOne({ where: { nick: id }});
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
   const user = await findByCodePromise;
   if(!user) {
     return res.status(400).json({
@@ -40,7 +39,6 @@ const sign = async (req, res) => {
 
 const login = async (req, res) => {
   const { id, password } = req.body;
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
   const exUser = await User.findOne({ where: { nick: id }});
   if(!exUser) {
     return res.status(400).json({
@@ -90,8 +88,9 @@ const changePassword = async (req, res) => {
 const offerInfo = async (req, res) => {
   const user = await User.findOne({
     where: { nick: req.decoded.nick },
-    attributes: ["name", "classNo"],
+    attributes: ["name", "classNo"],  
   });
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.json(user);
 };
 

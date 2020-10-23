@@ -24,15 +24,10 @@ sequelize.sync({ force: false })
   .catch(console.error);
 
 app.use(logger("dev"));
-app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Max-Age", "86400");
-  res.set("Access-Control-Allow-Methods", "GET, POST");
-  //cors({
-  //  origin: "http://10.156.147.121:3000",
-  //})(req, res, next);
-  next(); 
-});
+
+app.use(cors({
+  origin: "http://localhost:8002",
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,17 +40,13 @@ app.use(session({
 }));
 
 app.use("/img", express.static(path.join(__dirname, "uploads")));
+app.use("/md", express.static(path.join(__dirname, "md")));
 
 isEmpty();  
 
 app.use("/", indexRouter);
 app.use("/circles", circlesRouter);
 app.use("/admin", adminRouter);
-
-app.options("*", (req, res) => {
-  console.log("option response");
-  res.status(200).json({ status: "ok" });
-});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

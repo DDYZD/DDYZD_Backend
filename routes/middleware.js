@@ -1,14 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-exports.verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   try {  
       req.decoded = jwt.verify(req.headers.authentication.slice(7), process.env.JWT_SECRET);
-      if(!req.decoded.adminCircle) {
-          return res.status(401).json({
-            code: 401,
-            message: "권한이 없습니다.",
-          });
-      }
       return next();
   } catch(err) {
       console.error(err);
@@ -25,7 +19,18 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-exports.errorHandler = (myFunc) => {
+const checkAdmin = (req, res, next) => {
+    if(!req.decoded.adminCircle) {
+        return res.status(401).json({
+          code: 401,
+          message: "권한이 없습니다.",
+        });
+    } else {
+        next();
+    }
+};
+
+const errorHandler = (myFunc) => {
     return async (req, res) => {
         try {
             await myFunc(req, res);
@@ -36,4 +41,11 @@ exports.errorHandler = (myFunc) => {
             });
         }
     };
+};
+
+
+module.exports = {
+    verifyToken,
+    checkAdmin,
+    errorHandler,
 };

@@ -4,7 +4,7 @@ const path = require("path");
 
 const router = express.Router();
 
-const { verifyToken, errorHandler } = require("./middleware");
+const { verifyToken, errorHandler, checkAdmin } = require("./middleware");
 
 const adminUserController = require("../controller/admin");
 
@@ -26,9 +26,9 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/set/logo", verifyToken, upload.single("img"), beforeUpdateSetLogoRouter);
+router.post("/set/logo", verifyToken, checkAdmin, upload.single("img"), beforeUpdateSetLogoRouter);
 router.post("/post/logo", updateLogoRouter);
-router.post("/set/background", verifyToken, upload.single("img"), beforeUpdateSetBackgroundRouter);
+router.post("/set/background", verifyToken, checkAdmin, upload.single("img"), beforeUpdateSetBackgroundRouter);
 router.post("/post/background", updateBackgroundRouter);
 
 module.exports = router;
