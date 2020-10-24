@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs");
 const router = express.Router();
 
 const { errorHandler } = require("./middleware");
@@ -10,12 +9,14 @@ const circlesAllRouter = errorHandler(findCirclesController.circlesAll);
 const circlesWebRouter = errorHandler(findCirclesController.circlesWeb);
 const circlesAppRouter = errorHandler(findCirclesController.circlesApp);
 const circlesEmbeddedRouter = errorHandler(findCirclesController.circlesEmbedded);
-const circlesEtc = errorHandler(findCirclesController.circlesEtc);
+const circlesEtcRouter = errorHandler(findCirclesController.circlesEtc);
+const circlesInfoRouter = errorHandler(findCirclesController.circleInfo);
 
 router.get("/", circlesAllRouter);
 router.get("/web", circlesWebRouter);
 router.get("/app", circlesAppRouter);
 router.get("/embedded", circlesEmbeddedRouter);
-router.get("/etc", circlesEtc);
+router.get("/etc", circlesEtcRouter);
+router.get("/info", circlesInfoRouter)
 
 module.exports = router;

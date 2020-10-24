@@ -5,7 +5,7 @@ const logger = require("morgan");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const cors = require("cors");
-const isEmpty = require("./students/index").isEmpty;
+const isEmpty = require("./function/index").isEmpty;
 
 dotenv.config();
 
@@ -26,7 +26,8 @@ sequelize.sync({ force: false })
 app.use(logger("dev"));
 
 app.use(cors({
-  origin: "http://localhost:8002",
+  origin: "http://10.156.147.121:3000",
+  credentials: true,
 }));
 
 app.use(express.json());

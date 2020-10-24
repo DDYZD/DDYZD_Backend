@@ -1,5 +1,5 @@
 const { Circle, Tag } = require("../models");
-const { Op } = require("sequelize");
+const { Op, CIDR } = require("sequelize");
 
 const selectValues = async (circles) => {
   const result = circles.map(c => c.dataValues);
@@ -57,11 +57,31 @@ const circlesEtc = async (req, res) => {
   res.status(200).json(result);
 };
 
+const circleInfo = async (req, res) => {
+  const circle = await Circle.findOne({ 
+    where: { name: req.headers.circlename },
+    attributes: ["id", "recruitment", "name", "background", "logo", "startday", "endday"],
+    include: {
+      model: Tag,
+      attributes: ["title"],
+    },
+  });
+  if(!circle) {
+    return res.status(404).json({ message: "찾을 수 없음"});
+  }
+  const result = circle.dataValues;
+  result.Tags = result.Tags.map(tag => tag.dataValues.title);
+  result.md = `/md/${result.id}.md`;
+  delete result.id;
+  res.status(200).json(result);
+};
+
 module.exports = {
   circlesAll,
   circlesWeb,
   circlesApp,
   circlesEmbedded,
   circlesEtc,
+  circleInfo,
 };
 
