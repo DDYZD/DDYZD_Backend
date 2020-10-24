@@ -1,5 +1,5 @@
 const { Circle, Tag } = require("../models");
-const { Op, CIDR } = require("sequelize");
+const { Op } = require("sequelize");
 
 const selectValues = async (circles) => {
   const result = circles.map(c => c.dataValues);
@@ -11,7 +11,6 @@ const selectValues = async (circles) => {
 
 const selectCirclesByTag = (where) => {
   const options = {
-    attributes: ["recruitment", "name", "background", "logo", "startday", "endday"],
     order: ["id"],
     include: {
       model: Tag,
@@ -59,8 +58,7 @@ const circlesEtc = async (req, res) => {
 
 const circleInfo = async (req, res) => {
   const circle = await Circle.findOne({ 
-    where: { name: req.headers.circlename },
-    attributes: ["id", "recruitment", "name", "background", "logo", "startday", "endday"],
+    where: { id: req.headers.circleid },
     include: {
       model: Tag,
       attributes: ["title"],

@@ -25,10 +25,18 @@ sequelize.sync({ force: false })
 
 app.use(logger("dev"));
 
-app.use(cors({
-  origin: "http://10.156.147.121:3000",
-  credentials: true,
-}));
+app.use((req, res, next) => {
+  const allowOrigins = ["http://10.156.147.121:3000", "http://localhost:3000"];
+  const origin = req.headers.origin;
+  if(allowOrigins.includes(origin)) {
+    return cors({
+      origin: origin,
+      credentials: true,
+    })(req, res, next);
+  } else {
+    return next(); 
+  }
+})
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
