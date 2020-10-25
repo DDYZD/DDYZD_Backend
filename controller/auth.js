@@ -33,7 +33,7 @@ const sign = async (req, res) => {
     where: { id: user.id },
   });
   res.status(200).json({
-    message: "signup", 
+    message: "회원가입에 성공했습니다", 
   });
 };
 
