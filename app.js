@@ -36,7 +36,10 @@ app.use((req, res, next) => {
   } else {
     return next(); 
   }
-})
+});
+
+app.use("/img", express.static(path.join(__dirname, "uploads")));
+app.use("/md", express.static(path.join(__dirname, "md")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -47,9 +50,6 @@ app.use(session({
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
 }));
-
-app.use("/img", express.static(path.join(__dirname, "uploads")));
-app.use("/md", express.static(path.join(__dirname, "md")));
 
 isEmpty();  
 
