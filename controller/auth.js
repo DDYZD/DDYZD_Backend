@@ -53,6 +53,7 @@ const login = async (req, res) => {
     } 
     const token = jwt.sign({
       nick: exUser.nick,
+      name: exUser.name,
       adminCircle: exUser.adminCircle,
     }, process.env.JWT_SECRET, {
       expiresIn: "15h", // 유효기간
