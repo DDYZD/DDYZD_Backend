@@ -1,6 +1,8 @@
 const { Circle, Tag } = require("../models");
 const { Op } = require("sequelize");
 
+const CIRCLE_NUMBER = 18;
+
 const selectValues = async (circles) => {
   const result = circles.map(c => c.dataValues);
   result.forEach(circle => {
@@ -59,10 +61,7 @@ const circlesEtc = async (req, res) => {
 const circleInfo = async (req, res) => {
   const circle = await Circle.findOne({ 
     where: { id: req.headers.circleid },
-    include: {
-      model: Tag,
-      attributes: ["title"],
-    },
+    include: { model: Tag, attributes: ["title"] },
   });
   if(!circle) {
     return res.status(404).json({ message: "찾을 수 없음"});
@@ -74,6 +73,20 @@ const circleInfo = async (req, res) => {
   res.status(200).json(result);
 };
 
+const circleAd = async (req, res) => {
+  const result = [];
+  let id, circle;
+  for(let i=0; i<5; i++) {
+    id = Math.floor(Math.random() * CIRCLE_NUMBER + 1);
+    circle = await Circle.findOne({ where: { id }, attributes: ["id", "background"] });
+    result.push({
+      circleId: circle.id,
+      adImage: circle.background,
+    });
+  }
+  res.status(200).json(result);
+};
+
 module.exports = {
   circlesAll,
   circlesWeb,
@@ -81,5 +94,6 @@ module.exports = {
   circlesEmbedded,
   circlesEtc,
   circleInfo,
+  circleAd,
 };
 
