@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { errorHandler } = require("./middleware");
+const errorHandler = require("../middleware/errorHandler");
 
 const findCirclesController = require("../controller/circles");
 

@@ -2,7 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 
-const { verifyToken, errorHandler, checkAdmin, upload } = require("./middleware");
+const verifyToken = require("../middleware/verifyToken");
+const errorHandler = require("../middleware/errorHandler");
+const checkAdmin = require("../middleware/checkAdmin");
+const upload = require("../middleware/fileUpload");
 
 const adminUserController = require("../controller/admin");
 
