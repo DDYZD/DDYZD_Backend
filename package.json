@@ -4,7 +4,8 @@
   "private": true,
   "repository": "https://github.com/DDYZD/DDYZD_Backend",
   "scripts": {
-    "start": "nodemon ./app"
+    "start": "nodemon ./app",
+    "test": "npx mocha"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "artillery": "^1.6.1",
+    "mocha": "^8.2.0",
     "nodemon": "^2.0.4"
   }
 }
