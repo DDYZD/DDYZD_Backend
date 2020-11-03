@@ -1,9 +1,23 @@
+const { doesNotMatch } = require("assert");
 const assert = require("assert");
+const sinon = require("sinon");
+const check = require("../controller/check");
 
-describe("pow", function() {
+const checkAdmin = require("../middleware/checkAdmin");
 
-  it("주어진 숫자의 n 제곱", function() {
-    assert.equal((1+1), 3);
-  });
+const res = {
+  status: sinon.fake().returnValues(res),
+  json: sinon.fake(),
+};
 
+const next = sinon.fake();
+
+it("관리자 아닐 경우 json 호출", function() {
+  const req = {
+    decoded: { 
+      adminCircle: true,
+    },
+  };
+  checkAdmin(req, res, next);
+  assert.ok(status, 401);
 });
