@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
 const session = require("express-session");
-const cors = require("cors");
+const cors = require("cors");``
 const isEmpty = require("./function/index").isEmpty;
 
 dotenv.config();
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/img", express.static(path.join(__dirname, "uploads")));
-app.use("/md", express.static(path.join(__dirname, "md")));
+app.use("/md", express.static(path.join(__dirname, "markdown")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
