@@ -4,7 +4,8 @@
   "private": true,
   "repository": "https://github.com/DDYZD/DDYZD_Backend",
   "scripts": {
-    "start": "npx pm2 start app",
+    "start": "npx pm2 start app.js",
+    "stop": "npx pm2 stop app.js",
     "test": "npx mocha test/**/*.spec.js",
     "coverage": "nyc --reporter=text npm test"
   },
