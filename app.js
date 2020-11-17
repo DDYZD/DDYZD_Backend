@@ -44,13 +44,12 @@ app.use("/md", express.static(path.join(__dirname, "markdown")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
 }));
-
+  
 isEmpty();  
 
 app.use("/", indexRouter);
